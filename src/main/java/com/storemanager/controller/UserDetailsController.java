@@ -14,6 +14,7 @@ import com.storemanager.dao.UserDetailsDao;
 import com.storemanager.entity.UserDetails;
 
 @RestController
+@RequestMapping("/api")
 public class UserDetailsController {
 	
 	@Autowired

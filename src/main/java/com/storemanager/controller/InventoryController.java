@@ -17,6 +17,7 @@ import com.storemanager.entity.Inventory;
 
 
 @RestController
+@RequestMapping("/api")
 public class InventoryController {
 
     @Autowired

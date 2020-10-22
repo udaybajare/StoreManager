@@ -20,6 +20,7 @@ import com.storemanager.util.JwtUtil;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class LoginController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -31,11 +32,12 @@ public class LoginController {
 	LoginDetailService loginDetailService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody LoginInfo loginInfo) throws Exception
+	public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody LoginInfo loginInfo)
 	{
 		try
 		{
-			authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword()));
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword()));
+
 			UserDetails userDetails = loginDetailService
 					.loadUserByUsername(loginInfo.getUsername());
 
@@ -44,7 +46,7 @@ public class LoginController {
 			return ResponseEntity.ok(new AuthenticationResponse(jwt));
 		}
 		catch (BadCredentialsException e) {
-
+			e.printStackTrace();
 			return ResponseEntity.noContent().build();
 		}
 

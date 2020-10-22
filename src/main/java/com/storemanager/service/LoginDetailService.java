@@ -15,17 +15,24 @@ import com.storemanager.entity.LoginInfo;
 @Service
 public class LoginDetailService implements UserDetailsService {
 
-	@Autowired
-	LoginDao loginDao;
+    @Autowired
+    LoginDao loginDao;
 
-	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
-		Optional<LoginInfo> loginInfo = loginDao.findByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+        try
+		{
+            Optional<LoginInfo> loginInfo = loginDao.findByUsername(username);
+            loginInfo.orElseThrow(() -> new UsernameNotFoundException("Not found: "
+                    + username));
 
-		loginInfo.orElseThrow(() -> new UsernameNotFoundException("Not found: "
-				+ username));
-		return loginInfo.map(LoginDetails::new).get();
-	}
+            return loginInfo.map(LoginDetails::new).get();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
 
 }

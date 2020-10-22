@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+
 public class LoginInfo {
 
     @Id
@@ -46,4 +47,12 @@ public class LoginInfo {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "LoginInfo{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }
