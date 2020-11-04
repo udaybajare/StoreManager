@@ -14,4 +14,6 @@ public interface InventoryDao extends CrudRepository<Inventory, String> {
 	public Inventory save(Inventory inventory);
 
 	public Inventory findByProductCode(String productCode);
+
+	public List<Inventory> findByCompanyName(String companyName);
 }
