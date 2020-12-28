@@ -9,7 +9,7 @@ import com.storemanager.entity.UserDetails;
 
 public interface UserDetailsDao extends CrudRepository<UserDetails, String> {
 	
-	public UserDetails save(UserDetails userDetails);
+	//public UserDetails save(UserDetails userDetails);
 
 	public UserDetails findByUserName(String userName);
 	

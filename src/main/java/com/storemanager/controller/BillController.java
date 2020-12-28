@@ -1,7 +1,10 @@
 package com.storemanager.controller;
 
+import com.storemanager.request.BillRequest;
+import com.storemanager.util.StoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,14 +15,37 @@ import org.springframework.web.bind.annotation.RestController;
 import com.storemanager.dao.BillDao;
 import com.storemanager.entity.BillEntity;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/bill")
 public class BillController {
 
     @Autowired
     BillDao billDao;
 
-    @RequestMapping("/getAllBill")
+    @PostMapping
+    public ResponseEntity<?> saveBill(@RequestBody BillRequest billRequest)
+    {
+        try
+        {
+            String bill = StoreUtil.generateId();
+
+            BillEntity billEntity = new BillEntity();
+            billEntity.setBillNo(bill);
+            billEntity.setBillDate(billRequest.getBillDate());
+            billEntity.setName(billRequest.getName());
+            billEntity.setProductCode(billRequest.getProductCode());
+            billEntity.setTotalAmount(billRequest.getTotalAmount());
+            billEntity.setDiscount(billRequest.getDiscount());
+            return ResponseEntity.ok(billDao.save(billEntity));
+        }
+        catch (Exception ex)
+        {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping
     public ResponseEntity<?> getAllBill()
     {
         try {
@@ -31,21 +57,9 @@ public class BillController {
         }
     }
 
-    @PostMapping("/saveBill")
-    public ResponseEntity<?> saveBill(@RequestBody BillEntity billEntity)
-    {
-        try
-        {
-            return ResponseEntity.ok(billDao.save(billEntity));
-        }
-        catch (Exception ex)
-        {
-            return ResponseEntity.noContent().build();
-        }
-    }
 
-    @GetMapping("/getAllBill/{billNo}")
-    public ResponseEntity<?> getBillByNo(@PathVariable(value = "billNo") String billNo)
+    @GetMapping("/{billNo}")
+    public ResponseEntity<?> getBillByBillNo(@PathVariable(value = "billNo") String billNo)
     {
         try
         {

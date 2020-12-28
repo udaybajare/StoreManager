@@ -12,7 +12,7 @@ public interface BillDao extends CrudRepository<BillEntity, String>
 
 	public List<BillEntity> findAll();
 	
-	public BillEntity save(BillEntity billEntity);
+	//public BillEntity save(BillEntity billEntity);
 
 	public BillEntity findByBillNo(String billNo);
 

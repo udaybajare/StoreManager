@@ -2,6 +2,8 @@ package com.storemanager.entity;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 public class LoginInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     String username;
     String password;
     String role;

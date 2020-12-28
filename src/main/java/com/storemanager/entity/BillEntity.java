@@ -2,8 +2,10 @@ package com.storemanager.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class BillEntity {
 
 	@Id
@@ -14,41 +16,41 @@ public class BillEntity {
 	String discount;
 	String name;
 
-	public String getBillNo() {
-		return billNo;
-	}
-	public void setBillNo(String billNo) {
-		this.billNo = billNo;
-	}
-	public String getBillDate() {
-		return billDate;
-	}
-	public void setBillDate(String billDate) {
-		this.billDate = billDate;
-	}
-	public String getProductCode() {
-		return productCode;
-	}
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
-	public String getTotalAmount() {
-		return totalAmount;
-	}
-	public void setTotalAmount(String totalAmount) {
-		this.totalAmount = totalAmount;
-	}
-	public String getDiscount() {
-		return discount;
-	}
-	public void setDiscount(String discount) {
-		this.discount = discount;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public String getBillNo() {
+//		return billNo;
+//	}
+//	public void setBillNo(String billNo) {
+//		this.billNo = billNo;
+//	}
+//	public String getBillDate() {
+//		return billDate;
+//	}
+//	public void setBillDate(String billDate) {
+//		this.billDate = billDate;
+//	}
+//	public String getProductCode() {
+//		return productCode;
+//	}
+//	public void setProductCode(String productCode) {
+//		this.productCode = productCode;
+//	}
+//	public String getTotalAmount() {
+//		return totalAmount;
+//	}
+//	public void setTotalAmount(String totalAmount) {
+//		this.totalAmount = totalAmount;
+//	}
+//	public String getDiscount() {
+//		return discount;
+//	}
+//	public void setDiscount(String discount) {
+//		this.discount = discount;
+//	}
+//	public String getName() {
+//		return name;
+//	}
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 }

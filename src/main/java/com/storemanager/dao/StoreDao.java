@@ -10,7 +10,7 @@ public interface StoreDao extends CrudRepository<Store, Integer> {
 	
 	public List<Store> findAll();
 	
-	public Store save(Store store);
+	//public Store save(Store store);
 
 	public Store findByStoreName(String storeName);
 }

@@ -13,14 +13,27 @@ import com.storemanager.dao.StoreDao;
 import com.storemanager.entity.Store;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/store")
 public class StoreController {
 
 	@Autowired
 	StoreDao storedao;
+
+	//Save in db
+	@PostMapping
+	public ResponseEntity<?> saveStore(@RequestBody Store store )
+	{
+		try {
+			return ResponseEntity.ok(storedao.save(store));
+		}
+		catch (Exception ex)
+		{
+			return ResponseEntity.noContent().build();
+		}
+	}
 	
 	//All Store 
-	@RequestMapping("/getStoreDetails")
+	@GetMapping
 	public ResponseEntity<?> getStoreDetails()
 	{
 		try
@@ -33,21 +46,10 @@ public class StoreController {
 		}
 	}
 	
-	//Save in db 
-	@PostMapping("/saveDetails")
-	public ResponseEntity<?> saveStore(@RequestBody Store store )
-	{
-		try {
-			return ResponseEntity.ok(storedao.save(store));
-		}
-		catch (Exception ex)
-		{
-			return ResponseEntity.noContent().build();
-		}
-	}
+
 
 	//Search by storeName
-	@GetMapping("/getStoreDetails/{storeName}")
+	@GetMapping("/{storeName}")
 	public ResponseEntity<?> getStoreByName(@PathVariable (value="storeName")String storeName)
 	{
 		try {
