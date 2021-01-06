@@ -8,8 +8,7 @@ import java.sql.Blob;
 public class Inventory implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	int id;
+	private String inventoryId;
 	private String companyName;
 	private String productName;
 	private String productCode;
@@ -39,6 +38,14 @@ public class Inventory implements Serializable {
 		//this.image = image;
 		this.availableStatus = availableStatus;
 		this.inventoryEntryDate = inventoryEntryDate;
+	}
+
+	public String getInventoryId() {
+		return inventoryId;
+	}
+
+	public void setInventoryId(String inventoryId) {
+		this.inventoryId = inventoryId;
 	}
 
 	public String getCompanyName() {

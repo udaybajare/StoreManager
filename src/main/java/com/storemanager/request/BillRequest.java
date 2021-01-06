@@ -9,4 +9,5 @@ public class BillRequest {
     String totalAmount;
     String discount;
     String name;
+    String storeId;
 }

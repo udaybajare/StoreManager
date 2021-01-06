@@ -1,18 +1,18 @@
 package com.storemanager.controller;
 
+import com.storemanager.request.StoreRequest;
+import com.storemanager.util.StoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.storemanager.dao.StoreDao;
 import com.storemanager.entity.Store;
 
+
+
 @RestController
+@CrossOrigin
 @RequestMapping("/api/store")
 public class StoreController {
 
@@ -21,9 +21,12 @@ public class StoreController {
 
 	//Save in db
 	@PostMapping
-	public ResponseEntity<?> saveStore(@RequestBody Store store )
+	public ResponseEntity<?> saveStore(@RequestBody StoreRequest storeRequest )
 	{
 		try {
+			String storeId = StoreUtil.generateStoreId();
+			Store store = new Store(storeRequest.getStoreName(),storeRequest.getLocation(),storeRequest.getGstNumber(),storeRequest.getContactNo(),storeRequest.getStartDate());
+			store.setStoreId(storeId);
 			return ResponseEntity.ok(storedao.save(store));
 		}
 		catch (Exception ex)
@@ -54,6 +57,19 @@ public class StoreController {
 	{
 		try {
 			return ResponseEntity.ok(storedao.findByStoreName(storeName));
+		}
+		catch (Exception ex)
+		{
+			return ResponseEntity.noContent().build();
+		}
+	}
+
+	//Search by storeId
+	@GetMapping("/{storeId}")
+	public ResponseEntity<?> getStoreById(@PathVariable (value="storeId")String storeId)
+	{
+		try {
+			return ResponseEntity.ok(storedao.findByStoreId(storeId));
 		}
 		catch (Exception ex)
 		{

@@ -9,21 +9,30 @@ import javax.persistence.Id;
 public class Store {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private String storeId;
 	private String storeName;
 	private String contactNo;
 	private String location;
 	private String gstNumber;
 	private String startDate;
 
-
-	public int getId() {
-		return id;
+	public Store() {
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public Store(String storeName, String contactNo, String location, String gstNumber, String startDate) {
+		this.storeName = storeName;
+		this.contactNo = contactNo;
+		this.location = location;
+		this.gstNumber = gstNumber;
+		this.startDate = startDate;
+	}
+
+	public String getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
 	}
 
 	public String getStoreName() {

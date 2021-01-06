@@ -15,6 +15,7 @@ public class BillEntity {
 	String totalAmount;
 	String discount;
 	String name;
+	private String storeId;
 
 //	public String getBillNo() {
 //		return billNo;

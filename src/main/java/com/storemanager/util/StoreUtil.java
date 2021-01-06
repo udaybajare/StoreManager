@@ -21,4 +21,14 @@ public class StoreUtil {
         return builder.toString();
     }
 
+    public static String generateStoreId() {
+        return  "STOR" + String.valueOf(Math.abs(UUID.randomUUID().getLeastSignificantBits()))
+                .substring(10, 15)+ randomAlphaNumeric(4);
+    }
+
+    public static String generateInventoryId() {
+        return  "INVEN" + String.valueOf(Math.abs(UUID.randomUUID().getLeastSignificantBits()))
+                .substring(10, 15)+ randomAlphaNumeric(4);
+    }
+
 }

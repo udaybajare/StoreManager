@@ -10,6 +10,8 @@ import java.util.zip.Inflater;
 import com.storemanager.entity.ImageModel;
 import com.storemanager.request.InventoryRequest;
 import com.storemanager.request.InventoryUpdateRequest;
+import com.storemanager.request.UpdateInvByIdRequest;
+import com.storemanager.util.StoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,14 +34,16 @@ public class InventoryController {
     public ResponseEntity<?> saveInventory(@RequestBody InventoryRequest inventoryRequest) {
         try {
 
+            String inventoryId = StoreUtil.generateInventoryId();
 
 //            System.out.println("Original Image Byte Size - " + file.getBytes().length);
 //
 //           ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
 //                    compressBytes(file.getBytes()));
 //            System.out.println("Image Store procress");
-            Inventory inv = new Inventory(inventoryRequest.getCompanyName(),inventoryRequest.getProductCode(),inventoryRequest.getProductName(),inventoryRequest.getQuantity(),inventoryRequest.getUnitPrice(),inventoryRequest.getAvailableStatus(),inventoryRequest.getInventoryEntryDate());
 
+            Inventory inv = new Inventory(inventoryRequest.getCompanyName(),inventoryRequest.getProductCode(),inventoryRequest.getProductName(),inventoryRequest.getQuantity(),inventoryRequest.getUnitPrice(),inventoryRequest.getAvailableStatus(),inventoryRequest.getInventoryEntryDate());
+            inv.setInventoryId(inventoryId);
           //  System.out.println("Image Store done");
 //            System.out.println(inv);
 //
@@ -130,7 +134,7 @@ public class InventoryController {
    	}
 
 
-    @PatchMapping("/{productCode}")
+    @PatchMapping("updateInventory/{productCode}")
     public ResponseEntity<?> updateInventory(@PathVariable(value = "productCode") String productCode, @RequestBody InventoryUpdateRequest inventoryUpdateRequest) {
         try {
             Inventory inventoryByName = inventorydao.findByProductCode(productCode);
@@ -156,6 +160,30 @@ public class InventoryController {
 
             if(inventoryUpdateRequest.getInventoryEntryDate() != null && !(inventoryUpdateRequest.getInventoryEntryDate().equals(""))){
             inventoryByName.setInventoryEntryDate(inventoryUpdateRequest.getInventoryEntryDate());}
+
+            return ResponseEntity.ok(inventorydao.save(inventoryByName));
+
+        } catch (Exception ex) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @PatchMapping("/{inventoryId}")
+    public ResponseEntity<?> updateInventoryByInventoryId(@PathVariable(value = "inventoryId") String inventoryId, @RequestBody UpdateInvByIdRequest updateInvByIdRequest) {
+        try {
+            Inventory inventoryByName = inventorydao.findByInventoryId(inventoryId);
+
+
+
+            if(updateInvByIdRequest.getQuantity() != 0)
+                inventoryByName.setQuantity(updateInvByIdRequest.getQuantity());
+
+
+
+            if(updateInvByIdRequest.getAvailableStatus() != null && !(updateInvByIdRequest.getAvailableStatus().equals(""))){
+                inventoryByName.setAvailableStatus(updateInvByIdRequest.getAvailableStatus());}
+
+
 
             return ResponseEntity.ok(inventorydao.save(inventoryByName));
 
